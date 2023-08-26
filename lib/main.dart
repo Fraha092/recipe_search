@@ -39,8 +39,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final TextEditingController searchController=TextEditingController();
 
-  List<Model> list=<Model>[];
-  List<Model> searchedList=<Model>[];
+  List<Model> list=[];
+  List<Model> searchedList=[];
   String? text;
   String? health;
   String? type;
@@ -177,7 +177,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 calories: searchedList[i].calories.toString(),
                                 shareAs: searchedList[i].shareAs.toString(),
                                 ingredients: searchedList[i].ingredients.toString(),
-                                healthLabels: searchedList[i].healthLabels.toString(),)));
+                                healthLabels: searchedList[i].healthLabels.toString(),
+                                cuisineType: searchedList[i].cuisineType.toString(),)));
                             },
                             child: Card(
                               borderOnForeground: false,

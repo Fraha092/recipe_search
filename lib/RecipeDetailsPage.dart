@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'model.dart';
 
 class RecipeDetailsPage extends StatefulWidget {
-  final String image, url, source,label,calories,shareAs,ingredients,healthLabels;
-   RecipeDetailsPage({required this.image,required this.url,required this.source,required this.label,required this.calories,required this.shareAs,required this.ingredients,required this.healthLabels});
+  final String image, url, source,label,calories,shareAs,ingredients,healthLabels,cuisineType;
+   RecipeDetailsPage({required this.image,required this.url,required this.source,required this.label,required this.calories,required this.shareAs,required this.ingredients,required this.healthLabels,required this.cuisineType});
 
   @override
   State<RecipeDetailsPage> createState() => _RecipeDetailsPageState();
 }
 
 class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
-  List<Model> list=<Model>[];
+  List<Model> list=[];
 
   @override
   Widget build(BuildContext context) {
@@ -127,12 +128,118 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
                 ),
               ),),
           Positioned(
-            width: 14,height: 14,top: 197,left: 29,
-              child: IconButton(
-                onPressed: () {  },
-                icon: Icon(Icons.add_outlined),
-
+            top: 197,left: 29,
+              child: DecoratedBox(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Color(0xFF1AE823)
+                  ),
+              child: InkWell(child: Container(
+                  width: 22,height: 22,
+                  child: Image.asset('assets/images/img_1.png',fit: BoxFit.contain,)))),),
+          Positioned(
+           top: 197,left: 59,
+              child: DecoratedBox(decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Color(0xFF1AE823)
+              ),
+              child: InkWell(
+                onTap: ()async{
+                  String link=widget.shareAs.toString();
+                  if (await canLaunch(link)) {
+                  await launch(link); // Open the URL in a browser
+                  } else {
+                  print('Could not launch $link');
+                  }
+                },
+                child: Container(
+                    width: 22,height: 22,
+                    child: Image.asset('assets/images/img_2.png',fit: BoxFit.contain,)),
+              ))),
+          Positioned(
+            width: 79,height: 17,top: 252,left: 24,
+              child: Text('Health Labels:',
+                style: TextStyle(
+                  color: Color(0xFFCBCFD4),
+                  fontFamily: 'Poppins',
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
               )),
+          Positioned(
+            width: 310,
+              height: 20,
+              top: 274,left: 22,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Color(0xFFD9D9D9),
+                  borderRadius: BorderRadius.circular(8)
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: widget.healthLabels.length,
+                    itemBuilder: (context, index){
+                      return Center(
+                        child: Text(widget.healthLabels[index].toString(),
+                          style: TextStyle(
+                            color: Color(0xFF3C444C),
+                            fontFamily: 'Poppins',
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      );
+                    }),
+              )),
+          Positioned(
+              width: 75,height: 17,top: 296,left: 24,
+              child: Text('Cuisine Type:',
+                style: TextStyle(
+                  color: Color(0xFFCBCFD4),
+                  fontFamily: 'Poppins',
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
+              )),
+          Positioned(
+            width: 100,height: 30,
+              top: 312,left: 22,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: widget.cuisineType.length,
+                  itemBuilder: (BuildContext context,int index){
+                    return Container(
+                     // width: 53,
+                     // height: 20,
+                      decoration: BoxDecoration(
+                          color: Color(0xFFD9D9D9),
+                          borderRadius: BorderRadius.circular(8)
+                      ),
+                      child: Text(widget.cuisineType[index],
+                        style: TextStyle(
+                          color: Color(0xFF3C444C),
+                          fontFamily: 'Poppins',
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    );
+                  })),
+          Positioned(
+            width: 93,height: 24,top: 335,left: 24,
+              child: Text('Ingredients',
+                style: TextStyle(
+                  color: Color(0xFF3C444C),
+                  fontFamily: 'Poppins',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              )
+          ),
+
+
 
         ],
       )
