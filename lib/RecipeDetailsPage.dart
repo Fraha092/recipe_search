@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'model.dart';
 
 class RecipeDetailsPage extends StatefulWidget {
-  final String recipeDetailList;
-   RecipeDetailsPage({required this.recipeDetailList});
+  final String image, url, source,label,calories,shareAs,ingredients,healthLabels;
+   RecipeDetailsPage({required this.image,required this.url,required this.source,required this.label,required this.calories,required this.shareAs,required this.ingredients,required this.healthLabels});
 
   @override
   State<RecipeDetailsPage> createState() => _RecipeDetailsPageState();
@@ -58,8 +58,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text('Search...',style: TextStyle(fontFamily: 'Open Sans',fontWeight: FontWeight.w400,fontSize: 14,color: Color(
-                            0xFFCBCFD4)),),
+                        child: Text('Search...',style: TextStyle(fontFamily: 'Open Sans',fontWeight: FontWeight.w400,fontSize: 14,color: Color(0xFFCBCFD4)),),
                       )
                     ],
                   ),
@@ -90,7 +89,51 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
 
                 ],
               )),
-          Positioned(child: Text(widget.recipeDetailList.toString()))
+          Positioned(
+            width: 147,
+              height: 50,
+              top: 108,
+              left: 24,
+              child: Text(widget.label.toString(),
+                style: TextStyle(
+                  color: Color(0xFF3C444C),
+                  fontFamily: 'Poppins',
+                  fontSize: 16,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w700,
+                ),)),
+          Positioned(
+              width: 168,height: 168,
+              top: 100,left: 178,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(widget.image.toString()),
+                  ),
+                ),
+              )),
+          Positioned(
+            width: 132,height: 26,top: 150,left: 25,
+              child: InkWell(
+                child: Text('See full recipe on:\nBBC Good Food',
+                  style: TextStyle(
+                    color: Color(0xFF3C444C),
+                    fontFamily: 'Poppins',
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),),
+          Positioned(
+            width: 14,height: 14,top: 197,left: 29,
+              child: IconButton(
+                onPressed: () {  },
+                icon: Icon(Icons.add_outlined),
+
+              )),
+
         ],
       )
 

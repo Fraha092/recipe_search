@@ -42,6 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Model> list=<Model>[];
   List<Model> searchedList=<Model>[];
   String? text;
+  String? health;
+  String? type;
   String? query;
   bool data=true;
  // final url='https://api.edamam.com/search?q=chicken&app_id=cc8c3533&app_key=07639895be5a68794e6338cf0992b049&from=0&to=100&calories=591-722&health=alcohol-free';
@@ -59,9 +61,17 @@ class _MyHomePageState extends State<MyHomePage> {
         source: e['recipe']['source'],
         label: e['recipe']['label'],
         calories: e['recipe']['calories'],
-        ingredients: (e['recipe']['ingredients'] as List)
+        ingredients: (e['recipe']['ingredients'] as List<dynamic>)
             .map((ingredient) => ingredient['text'].toString())
             .toList(),
+        shareAs: e['recipe']['shareAs'],
+        healthLabels: (e['recipe']['healthLabels'] as List<dynamic>)
+            .map((health) => health.toString())
+            .toList(),
+        cuisineType: (e['recipe']['cuisineType'] as List<dynamic>)
+            .map((type) => type.toString())
+            .toList(),
+
       );
       setState(() {
         list.add(model);
@@ -159,7 +169,15 @@ class _MyHomePageState extends State<MyHomePage> {
                           final x=searchedList[i];
                           return InkWell(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>RecipeDetailsPage(recipeDetailList: searchedList[i].label.toString(),)));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>RecipeDetailsPage(
+                                image: searchedList[i].image.toString(),
+                                url: searchedList[i].url.toString(),
+                                source: searchedList[i].source.toString(),
+                                label: searchedList[i].label.toString(),
+                                calories: searchedList[i].calories.toString(),
+                                shareAs: searchedList[i].shareAs.toString(),
+                                ingredients: searchedList[i].ingredients.toString(),
+                                healthLabels: searchedList[i].healthLabels.toString(),)));
                             },
                             child: Card(
                               borderOnForeground: false,
